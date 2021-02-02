@@ -29,11 +29,11 @@ if len(args)>0:
 
 #-------------------------------------------
 
-PYTHON_DIR = "c:/Python38-64"
+PYTHON_DIR = os.environ['LOCALAPPDATA'].replace('\\', '/') + "/Programs/Python/Python39"
 
 PYTHON = PYTHON_DIR + "/python.exe"
 
-DOXYGEN_DIR = "c:/Program Files/doxygen"
+DOXYGEN_DIR = "D:/BIN/doxygen"
 
 DIST_DIR = "dist/clnch"
 VERSION = clnch_resource.clnch_version.replace(".","")
@@ -42,7 +42,7 @@ ARCHIVE_NAME = "clnch_%s.zip" % VERSION
 DIST_FILES = {
     "clnch.exe" :           "clnch/clnch.exe",
     "lib" :                 "clnch/lib",
-    "python38.dll" :        "clnch/python38.dll",
+    "python39.dll" :        "clnch/python39.dll",
     "_config.py" :          "clnch/_config.py",
     "readme.txt" :          "clnch/readme.txt",
     "theme/black" :         "clnch/theme/black",
@@ -152,7 +152,7 @@ def target_copy():
 
     rmtree("lib")
 
-    shutil.copy( f"{PYTHON_DIR}/python38.dll", "python38.dll" )
+    shutil.copy( f"{PYTHON_DIR}/python39.dll", "python39.dll" )
 
     shutil.copytree( f"{PYTHON_DIR}/DLLs", "lib", 
         ignore=shutil.ignore_patterns(
@@ -169,7 +169,7 @@ def target_copy():
             )
         )
 
-    shutil.copy( f"{PYTHON_DIR}/Lib/site-packages/PIL/_imaging.cp38-win_amd64.pyd", "lib/_imaging.pyd" )
+    shutil.copy( f"{PYTHON_DIR}/Lib/site-packages/PIL/_imaging.cp39-win_amd64.pyd", "lib/_imaging.pyd" )
 
     shutil.copy( "../ckit/ckitcore.pyd", "lib/ckitcore.pyd" )
     shutil.copy( "../pyauto/pyautocore.pyd", "lib/pyautocore.pyd" )
@@ -188,7 +188,7 @@ def target_document():
     subprocess.call( [ PYTHON, "tool/rst2html_pygments.py", "--stylesheet=tool/rst2html_pygments.css", "doc/changes.txt", "doc/obj/changes.html" ] )
     subprocess.call( [ PYTHON, "tool/rst2html_pygments.py", "--stylesheet=tool/rst2html_pygments.css", "--template=tool/rst2html_template.txt", "doc/changes.txt", "doc/obj/changes.htm_" ] )
 
-    subprocess.call( [ DOXYGEN_DIR + "/bin/doxygen.exe", "doc/doxyfile" ] )
+    subprocess.call( [ DOXYGEN_DIR + "/doxygen.exe", "/Doxyfile" ] )
     shutil.copytree( "doc/image", "doc/html/image", ignore=shutil.ignore_patterns("*.pdn",) )
 
 
