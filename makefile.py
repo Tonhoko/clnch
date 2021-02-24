@@ -188,7 +188,7 @@ def target_document():
     subprocess.call( [ PYTHON, "tool/rst2html_pygments.py", "--stylesheet=tool/rst2html_pygments.css", "doc/changes.txt", "doc/obj/changes.html" ] )
     subprocess.call( [ PYTHON, "tool/rst2html_pygments.py", "--stylesheet=tool/rst2html_pygments.css", "--template=tool/rst2html_template.txt", "doc/changes.txt", "doc/obj/changes.htm_" ] )
 
-    subprocess.call( [ DOXYGEN_DIR + "/doxygen.exe", "/Doxyfile" ] )
+    subprocess.call( [ DOXYGEN_DIR + "/doxygen.exe", "doc/doxyfile" ] )
     shutil.copytree( "doc/image", "doc/html/image", ignore=shutil.ignore_patterns("*.pdn",) )
 
 
