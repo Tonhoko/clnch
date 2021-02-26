@@ -481,7 +481,12 @@ class MainWindow( ckit.TextWindow ):
                 window_width = commandline_self.getWindowWidthFromText(text)
                 if window_width == self.width() : return
                 window_rect = self.getWindowRect()
-                self.setPosSize( window_rect[0], window_rect[1], window_width, self.height(), 0 )                    
+
+                # ウインドウ幅変化により表示位置をセンタリングする
+                char_w, char_h = self.getCharSize()
+                move_x = window_rect[0] + ( ( char_w // 2 ) * ( self.width() - window_width ) )
+
+                self.setPosSize( move_x, window_rect[1], window_width, self.height(), 0 )
 
             def planCommand( commandline_self, command, info, history ):
                 commandline_self.planned_command_list.append( ( command, info, history ) )
@@ -620,8 +625,9 @@ class MainWindow( ckit.TextWindow ):
 
         if not self.initialized : return
 
-        if self.commandline_edit:
-            self.commandline_edit.onWindowMove()
+        # ウインドウが移動してもリストを消去しない(ウインドウセンタリングすると消えるため)
+        #if self.commandline_edit:
+        #    self.commandline_edit.onWindowMove()
 
     def _onSize( self, width, height ):
         self.updateThemeSize()
