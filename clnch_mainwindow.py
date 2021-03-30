@@ -1161,10 +1161,10 @@ class MainWindow( ckit.TextWindow ):
             return True
 
         def onEscape( commandline ):
-            self.resetPos()
-            self.inactivate()
             # Escキーでウインドウを隠す
             self.show(False)
+            self.resetPos()
+            self.inactivate()
             return True
 
         auto_complete = clnch_ini.getint( "MISC", "auto_complete", "1" )
@@ -1178,6 +1178,7 @@ class MainWindow( ckit.TextWindow ):
         if self.hideFlag:
             if not self.console_window.isVisible():
                 self.show(False)
+                self.resetPos()
             self.hideFlag = False
 
         if inactive_behavior=="hide":
