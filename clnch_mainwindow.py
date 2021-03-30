@@ -1146,6 +1146,10 @@ class MainWindow( ckit.TextWindow ):
 
             commandline.executeCommand( func, info, history_item, quit=quit )
 
+            # コマンド実行でウィンドウを隠す(即時判断できないため、ここではフラグを立てる)
+            if quit:
+                self.hideFlag = True
+
             return True
 
         def onEnter( commandline, text, mod ):
