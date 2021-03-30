@@ -79,7 +79,9 @@ class MainWindow( ckit.TextWindow ):
         self.commandline_list = []
         self.commandline_history = []
         self.commandLineHistoryLoad()
-        
+
+        self.hideFlag = False
+
         # 表示予定のモニターのDPIによってフォントサイズを調整する
         monitor = clnch_ini.getint( "GEOMETRY", "monitor", 0 )
         monitor_info_list = pyauto.Window.getMonitorInfo()
@@ -1149,12 +1151,16 @@ class MainWindow( ckit.TextWindow ):
         def onEnter( commandline, text, mod ):
             for commandline_function in self.commandline_list:
                 if commandline_function.onEnter( commandline, text, mod ):
+                    # コマンド実行でウィンドウを隠す(即時判断できないため、ここではフラグを立てる)
+                    self.hideFlag = True
                     break
             return True
 
         def onEscape( commandline ):
             self.resetPos()
             self.inactivate()
+            # Escキーでウインドウを隠す
+            self.show(False)
             return True
 
         auto_complete = clnch_ini.getint( "MISC", "auto_complete", "1" )
@@ -1163,6 +1169,12 @@ class MainWindow( ckit.TextWindow ):
     def inactiveMessageLoop(self):
 
         inactive_behavior = clnch_ini.get( "MISC", "inactive_behavior", "clock" )
+
+        # コンソールウインドウが表示されていなければ隠す
+        if self.hideFlag:
+            if not self.console_window.isVisible():
+                self.show(False)
+            self.hideFlag = False
 
         if inactive_behavior=="hide":
             self.show(False)
