@@ -252,7 +252,7 @@ class MainWindow( ckit.TextWindow ):
         self.mouse_event_mask = True
 
         self.removeKeyMessage()
-        self.messageLoop( sub_thread.isAlive )
+        self.messageLoop( sub_thread.is_alive )
 
         sub_thread.join()
         result = sub_thread.result
