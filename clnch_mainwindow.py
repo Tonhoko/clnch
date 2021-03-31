@@ -1616,7 +1616,8 @@ class MainWindow( ckit.TextWindow ):
     #
     def command_Reload( self, info ):
         self.configure()
-        print( "設定スクリプトをリロードしました.\n" )
+        if self.active:
+            print( "設定スクリプトをリロードしました.\n" )
 
     ## コンソールウインドウを開く
     #
