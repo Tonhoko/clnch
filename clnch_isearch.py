@@ -18,6 +18,8 @@ class IncrementalSearch:
         self.migemo_re_pattern = ""
         self.migemo_re_object = None
         self.migemo_re_result = None
+        self.migemo_dll_path = clnch_ini.get( "MISC", "migemo_dll_path", "" )
+        self.migemo_dict_path = clnch_ini.get( "MISC", "migemo_dict_path", "" )
 
     def fnmatch( self, name, pattern, isearch_type=None ):
     
@@ -44,8 +46,16 @@ class IncrementalSearch:
 
             # 初めて migemo が必要になったときに遅延ロードする                    
             if migemo_object==None:
-                dll_path = os.path.join( ckit.getAppExePath(), 'lib' )
-                dict_path = os.path.join( ckit.getAppExePath(), 'dict' )
+                if self.migemo_dll_path != "":
+                    dll_path = self.migemo_dll_path
+                else:
+                    dll_path = os.path.join( ckit.getAppExePath(), 'lib' )
+
+                if self.migemo_dict_path != "":
+                    dict_path = self.migemo_dict_path
+                else:
+                    dict_path = os.path.join( ckit.getAppExePath(), 'dict' )
+
                 migemo_object = ckit.Migemo( dll_path, dict_path )
             
             # 検索パターンが変更になったときだけクエリーをかける

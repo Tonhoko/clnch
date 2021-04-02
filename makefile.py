@@ -50,7 +50,6 @@ DIST_FILES = {
     "license" :             "clnch/license",
     "doc/html" :            "clnch/doc",
     "library.zip" :         "clnch/library.zip",
-    "dict/.keepme" :        "clnch/dict/.keepme",
     "extension/.keepme" :   "clnch/extension/.keepme",
     }
 
@@ -174,7 +173,6 @@ def target_copy():
     shutil.copy( "../ckit/ckitcore.pyd", "lib/ckitcore.pyd" )
     shutil.copy( "../pyauto/pyautocore.pyd", "lib/pyautocore.pyd" )
     shutil.copy( "clnch_native.pyd", "lib/clnch_native.pyd" )
-    shutil.copy( "migemo.dll", "lib/migemo.dll" )
 
 
 def target_document():
