@@ -14,6 +14,7 @@ clnch_msgbox.py
 clnch_musicplayer.py
 clnch_resource.py
 clnch_statusbar.py
+clnch_tasktrayicon.py
 makefile.py
 setup.py
 _config.py

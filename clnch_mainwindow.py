@@ -29,6 +29,7 @@ import clnch_ipc
 import clnch_native
 import clnch_debug
 import clnch_resource
+import clnch_tasktrayicon
 from clnch_resource import *
 
 
@@ -178,6 +179,7 @@ class MainWindow( ckit.TextWindow ):
 
         self.console_window = clnch_consolewindow.ConsoleWindow( self, debug=debug )
         self.console_window.registerStdio()
+        self.task_tray_icon = clnch_tasktrayicon.TaskTrayIcon( self.console_window, self )
 
         self.updateInactiveBehavior()
 
@@ -186,6 +188,7 @@ class MainWindow( ckit.TextWindow ):
         self.paint()
 
     def destroy(self):
+        self.task_tray_icon.destroy()
         self.console_window.unregisterStdio()
         self.console_window.destroy()
         ckit.destroyTemp()
